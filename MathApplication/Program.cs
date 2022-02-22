@@ -68,8 +68,8 @@ namespace MathApplication
             var shapeCircle = new Shape
             {
                 Name = MathApplicationConstants.Circle,
-                Area = circle.Area(3.14, 3),
-                Perimeter = circle.Perimeter(3.14, 3)
+                Area = circle.Area(MathApplicationConstants.Pi, 3),
+                Perimeter = circle.Perimeter(MathApplicationConstants.Pi, 3)
             };
 
             //Square Object
