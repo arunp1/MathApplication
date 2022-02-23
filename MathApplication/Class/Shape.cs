@@ -5,10 +5,10 @@ namespace MathApplication
     [Serializable]
     public class Shape
     {
-        public string Name { get; set; }
+        public string ShapeName { get; set; }
 
-        public double Area { get; set; }
+        public double ShapeArea { get; set; }
 
-        public double Perimeter { get; set; }
+        public double ShapePerimeter { get; set; }
     }
 }

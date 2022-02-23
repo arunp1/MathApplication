@@ -48,11 +48,11 @@
   <ItemGroup>
     <Compile Include="Class\Circle.cs" />
     <Compile Include="Constant\MathApplicationConstants.cs" />
-    <Compile Include="Interface\IShape.cs" />
+    <Compile Include="Interface\ICommonShape.cs" />
+    <Compile Include="Interface\ITriangleShape.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Class\Rectangle.cs" />
-    <Compile Include="Class\Square.cs" />
+    <Compile Include="Class\Quadrilaterals.cs" />
     <Compile Include="Class\Triangle.cs" />
     <Compile Include="Class\Shape.cs" />
   </ItemGroup>

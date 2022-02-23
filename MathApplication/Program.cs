@@ -12,30 +12,41 @@ namespace MathApplication
     {
         private static void Main(string[] args)
         {
-            var shapesList = FillAndAddToCollection();
+            try
+            {
+                var shapesList = FillAndAddToCollection();
 
-            //Currently Sort the shapes based on Area & Parameter.
-            var sortedShapesOnAreas = SortShapes(MathApplicationConstants.SortTypes.Areas, shapesList);
-            var sortedShapesOnPerimeter = SortShapes(MathApplicationConstants.SortTypes.Perimeter, shapesList);
-
-
-            var serializedValuesInXml = DataSerialize(MathApplicationConstants.SerilazeTypes.XML, sortedShapesOnAreas);
-
-            Console.WriteLine("Serialize the value in XML \n");
-
-            Console.WriteLine(serializedValuesInXml);
+                // Sort the shapes based on Area & Parameter.
+                var sortedShapesOnAreas = SortShapes(MathApplicationConstants.SortTypes.Areas, shapesList);
+                var sortedShapesOnPerimeter = SortShapes(MathApplicationConstants.SortTypes.Perimeter, shapesList);
 
 
-            var serializedValuesInJson = DataSerialize(MathApplicationConstants.SerilazeTypes.Json, sortedShapesOnPerimeter);
+                var serializedValuesInXml =
+                    DataSerialize(MathApplicationConstants.SerilazeTypes.XML, sortedShapesOnAreas);
 
-            Console.WriteLine("Serialize the value in Json \n");
+                Console.WriteLine("Serialize the value in XML \n");
 
-            Console.WriteLine(serializedValuesInJson);
+                Console.WriteLine(serializedValuesInXml);
 
 
-            Console.WriteLine(TrackClassObjectCount(shapesList));
+                var serializedValuesInJson =
+                    DataSerialize(MathApplicationConstants.SerilazeTypes.Json, sortedShapesOnPerimeter);
 
-            Console.ReadKey();
+                Console.WriteLine("Serialize the value in Json \n");
+
+                Console.WriteLine(serializedValuesInJson);
+
+
+                Console.WriteLine(TrackClassObjectCount(shapesList));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                Console.ReadKey();
+            }
         }
 
 
@@ -44,55 +55,55 @@ namespace MathApplication
         {
             //Triangle Object
 
-            IShape triangle = new Triangle();
+            var triangle = new Triangle();
 
             var shapeTriangle = new Shape
             {
-                Name = MathApplicationConstants.Triangle,
-                Area = triangle.Area(2, 3),
-                Perimeter = triangle.Perimeter(1, 2, 3)
+                ShapeName = triangle.TriangleTypeName(5, 5, 5),
+                ShapeArea = triangle.Area(2, 3),
+                ShapePerimeter = triangle.Perimeter(5, 5, 5)
             };
 
             var shapeTriangle2 = new Shape
             {
-                Name = MathApplicationConstants.Triangle,
-                Area = triangle.Area(3, 5),
-                Perimeter = triangle.Perimeter(2, 5, 8)
+                ShapeName = triangle.TriangleTypeName(2, 5, 8),
+                ShapeArea = triangle.Area(3, 5),
+                ShapePerimeter = triangle.Perimeter(2, 5, 8)
             };
 
 
             //Circle Object
 
-            IShape circle = new Circle();
+            var circle = new Circle();
 
             var shapeCircle = new Shape
             {
-                Name = MathApplicationConstants.Circle,
-                Area = circle.Area(MathApplicationConstants.Pi, 3),
-                Perimeter = circle.Perimeter(MathApplicationConstants.Pi, 3)
+                ShapeName = MathApplicationConstants.Circle,
+                ShapeArea = circle.Area(MathApplicationConstants.Pi, 3),
+                ShapePerimeter = circle.Perimeter(MathApplicationConstants.Pi, 3)
             };
 
             //Square Object
 
-            IShape square = new Square();
+            var square = new Quadrilaterals();
 
             var shapeSquare = new Shape
             {
-                Name = MathApplicationConstants.Square,
-                Area = square.Area(5, 5),
-                Perimeter = square.Perimeter(5, 5)
+                ShapeName = square.QuadrilateralsTypeName(5, 5),
+                ShapeArea = square.Area(5, 5),
+                ShapePerimeter = square.Perimeter(5, 5)
             };
 
 
             //Rectangle Object
 
-            IShape rectangle = new Rectangle();
+            var rectangle = new Quadrilaterals();
 
             var shapeRectangle = new Shape
             {
-                Name = MathApplicationConstants.Rectangle,
-                Area = rectangle.Area(5, 5),
-                Perimeter = rectangle.Perimeter(5, 5)
+                ShapeName = square.QuadrilateralsTypeName(5, 10),
+                ShapeArea = rectangle.Area(5, 10),
+                ShapePerimeter = rectangle.Perimeter(5, 10)
             };
 
 
@@ -121,9 +132,9 @@ namespace MathApplication
             switch (sortTypes)
             {
                 case MathApplicationConstants.SortTypes.Areas:
-                    return shapesList.OrderByDescending(s => s.Area).ToList();
+                    return shapesList.OrderByDescending(s => s.ShapeArea).ToList();
                 case MathApplicationConstants.SortTypes.Perimeter:
-                    return shapesList.OrderByDescending(s => s.Perimeter).ToList();
+                    return shapesList.OrderByDescending(s => s.ShapePerimeter).ToList();
                 default:
                     return shapesList;
             }
@@ -135,7 +146,8 @@ namespace MathApplication
         /// <param name="serilazeTypes"></param>
         /// <param name="shapesList"></param>
         /// <returns></returns>
-        public static string DataSerialize(MathApplicationConstants.SerilazeTypes serilazeTypes, List<Shape> shapesList)
+        private static string DataSerialize(MathApplicationConstants.SerilazeTypes serilazeTypes,
+            List<Shape> shapesList)
         {
             switch (serilazeTypes)
             {
@@ -161,18 +173,16 @@ namespace MathApplication
         private static string TrackClassObjectCount(List<Shape> shapesList)
         {
             //Counts of Each Shapes
-            var totalCountTriangleObject = shapesList.Where(x =>
-                x.Name.Equals(MathApplicationConstants.Triangle, StringComparison.CurrentCultureIgnoreCase)).Count();
-            var totalCountCircleObject = shapesList.Where(x =>
-                x.Name.Equals(MathApplicationConstants.Circle, StringComparison.CurrentCultureIgnoreCase)).Count();
-            var totalCountSquareObject = shapesList.Where(x =>
-                x.Name.Equals(MathApplicationConstants.Square, StringComparison.CurrentCultureIgnoreCase)).Count();
-            var totalCountRectangleObject = shapesList.Where(x =>
-                x.Name.Equals(MathApplicationConstants.Rectangle, StringComparison.CurrentCultureIgnoreCase)).Count();
+            var totalCountTriangleObject = shapesList.Count(x => x.ShapeName.Contains("Triangle"));
+            var totalCountCircleObject = shapesList.Count(x =>
+                x.ShapeName.Equals(MathApplicationConstants.Circle, StringComparison.CurrentCultureIgnoreCase));
+            var totalCountSquareObject = shapesList.Count(x =>
+                x.ShapeName.Equals(MathApplicationConstants.Square, StringComparison.CurrentCultureIgnoreCase));
+            var totalCountRectangleObject = shapesList.Count(x =>
+                x.ShapeName.Equals(MathApplicationConstants.Rectangle, StringComparison.CurrentCultureIgnoreCase));
 
-            return string.Format(
-                "\n\n\nThe number of Shape objects  Rectangle : {0} \n Square : {1} \n Triangle : {2}\n Circle : {3}",
-                totalCountRectangleObject, totalCountSquareObject, totalCountTriangleObject, totalCountCircleObject);
+            return
+                $"\n\n\nThe number of Shape objects  Rectangle : {totalCountRectangleObject} \n Square : {totalCountSquareObject} \n Triangle : {totalCountTriangleObject}\n Circle : {totalCountCircleObject}";
         }
     }
 }

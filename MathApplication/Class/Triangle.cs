@@ -1,6 +1,10 @@
-﻿namespace MathApplication
+﻿using System;
+using MathApplication.Constant;
+using MathApplication.Interface;
+
+namespace MathApplication
 {
-    public class Triangle : IShape
+    public class Triangle : Shape, ITriangleShape
     {
         /// <summary>
         ///     Find Area of Triangle
@@ -10,7 +14,14 @@
         /// <returns>Area</returns>
         public double Area(double height, double baseTriangle)
         {
-            return height / baseTriangle / 2;
+            try
+            {
+                return height / baseTriangle / 2;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
 
@@ -23,7 +34,36 @@
         /// <returns>Perimeter</returns>
         public double Perimeter(double height, double width, double length)
         {
-            return height + width * length;
+            try
+            {
+                return height + width * length;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public string TriangleTypeName(double height, double width, double length)
+        {
+            try
+            {
+                //  equilateral triangle
+                if (height == width && width == length)
+                    return MathApplicationConstants.EquilateralTriangle;
+
+                // isosceles triangle
+                if (height == width || width == length || length == height)
+                    return MathApplicationConstants.IsoscelesTriangle;
+
+                //  scalene triangle
+                return MathApplicationConstants.ScaleneTriangle;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

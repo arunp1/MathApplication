@@ -17,7 +17,9 @@
         public const string Circle = "Circle";
         public const string Rectangle = "Rectangle";
         public const string Square = "Square";
-        public const string Triangle = "Triangle";
+        public const string EquilateralTriangle = "EquilateralTriangle";
+        public const string IsoscelesTriangle = "IsoscelesTriangle";
+        public const string ScaleneTriangle = "ScaleneTriangle";
         public const double Pi = 3.14;
     }
 }

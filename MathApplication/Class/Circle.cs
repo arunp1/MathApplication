@@ -1,6 +1,8 @@
-﻿namespace MathApplication
+﻿using System;
+
+namespace MathApplication
 {
-    public class Circle : IShape
+    public class Circle : Shape, ICommonShape
     {
         /// <summary>
         ///     Find Area of Circle
@@ -10,7 +12,14 @@
         /// <returns>Area</returns>
         public double Area(double pi, double radius)
         {
-            return pi * (radius * radius);
+            try
+            {
+                return pi * (radius * radius);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         /// <summary>
@@ -18,12 +27,17 @@
         /// </summary>
         /// <param name="pi"></param>
         /// <param name="radius"></param>
-        /// <param name="value3"></param>
-        /// This Param is not being used its for Triangle, so added a optional parameter
         /// <returns>Perimeter</returns>
-        public double Perimeter(double pi, double radius, double value3 = 0)
+        public double Perimeter(double pi, double radius)
         {
-            return 2 * pi * radius;
+            try
+            {
+                return 2 * pi * radius;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }
